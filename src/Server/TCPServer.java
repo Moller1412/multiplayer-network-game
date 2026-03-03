@@ -12,8 +12,7 @@ public class TCPServer {
     public static void main(String[] args)throws Exception {
         ServerSocket welcomeSocket = new ServerSocket(6789);
         Socket connectionSocket = welcomeSocket.accept();
-        BufferedReader inFromUser =
-                new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
         String up = inFromUser.readLine();
         System.out.println(up);
             new ReadThread(connectionSocket).start();
