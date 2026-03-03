@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class TCPServer {
     public static void main(String[] args)throws Exception {
-        ServerSocket welcomeSocket = new ServerSocket(6677);
+        ServerSocket welcomeSocket = new ServerSocket(6789);
         Socket connectionSocket = welcomeSocket.accept();
             new ReadThread(connectionSocket).start();
             new WriteThread(connectionSocket).start();
