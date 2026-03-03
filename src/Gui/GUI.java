@@ -1,7 +1,9 @@
 package Gui;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 import Server.ReadThread;
 import Server.WriteThread;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -72,10 +75,11 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) {
 
         try {
-			Socket clientSocket = new Socket("10.10.139.24", 6789);
+			Socket clientSocket = new Socket("Localhost", 6789);
 			new ReadThread(clientSocket).start();
 			new WriteThread(clientSocket).start();
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -132,6 +136,7 @@ public class GUI extends Application {
 				case UP:    playerMoved(0,-1,"up");
                     try {
                         outToServer.writeBytes("Up" +'\n');
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
