@@ -1,8 +1,14 @@
 package Gui;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Server.ReadThread;
+import Server.WriteThread;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
@@ -15,6 +21,7 @@ import javafx.scene.text.*;
 import Player.Player;
 
 public class GUI extends Application {
+
 
 	public static final int size = 20; 
 	public static final int scene_height = size * 20 + 100;
@@ -63,7 +70,13 @@ public class GUI extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		try {
+
+        try {
+			Socket clientSocket = new Socket("10.10.139.28", 6789);
+			new ReadThread(clientSocket).start();
+			new WriteThread(clientSocket).start();
+			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
 			grid.setVgap(10);
@@ -130,9 +143,9 @@ public class GUI extends Application {
 			players.add(me);
 			fields[9][4].setGraphic(new ImageView(hero_up));
 
-			Player harry = new Player("Harry",14,15,"up");
-			players.add(harry);
-			fields[14][15].setGraphic(new ImageView(hero_up));
+//			Player harry = new Player("Harry",14,15,"up");
+//			players.add(harry);
+//			fields[14][15].setGraphic(new ImageView(hero_up));
 
 			scoreList.setText(getScoreList());
 		} catch(Exception e) {
