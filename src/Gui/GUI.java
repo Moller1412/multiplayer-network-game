@@ -76,10 +76,10 @@ public class GUI extends Application {
 
         try {
 			Socket clientSocket = new Socket("Localhost", 6789);
-			//new ReadThread(clientSocket).start();
+			ReadThread rt = new ReadThread(clientSocket);
 			//new WriteThread(clientSocket).start();
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			//BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -130,14 +130,13 @@ public class GUI extends Application {
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-
+			rt.start();
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 				switch (event.getCode()) {
 				case UP:    playerMoved(0,-1,"up");
                     try {
                         outToServer.writeBytes("Up" +'\n');
-						String sentence = inFromServer.readLine();
-						System.out.println(sentence);
+
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);

@@ -15,10 +15,10 @@ public class TCPServer {
         Socket connectionSocket = welcomeSocket.accept();
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
         DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+        outToClient.writeBytes("Spillet er startet " + "\n");
         while (true) {
             String up = inFromUser.readLine();
             System.out.println(up);
-            outToClient.writeBytes(up + "\n");
             outToClient.writeBytes(up + '\n');
         }
             //new ReadThread(connectionSocket).start();
