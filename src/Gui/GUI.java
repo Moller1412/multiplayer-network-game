@@ -132,16 +132,13 @@ public class GUI extends Application {
 			primaryStage.show();
 			rt.start();
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+				try {
+					outToServer.writeBytes("Moved" +'\n');
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
 				switch (event.getCode()) {
-				case UP:    playerMoved(0,-1,"up");
-                    try {
-                        outToServer.writeBytes("Up" +'\n');
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
+				case UP:    playerMoved(0,-1,"up");break;
 				case DOWN:  playerMoved(0,+1,"down");  break;
 				case LEFT:  playerMoved(-1,0,"left");  break;
 				case RIGHT: playerMoved(+1,0,"right"); break;
@@ -151,10 +148,14 @@ public class GUI extends Application {
 			
             // Setting up standard players
 			
-			me = new Player("Orville",9,4,"up");
-			players.add(me);
-			fields[9][4].setGraphic(new ImageView(hero_up));
 
+
+			if(clientSocket.isConnected()){
+				me = new Player("Orville",9,4,"up");
+				players.add(me);
+				fields[9][4].setGraphic(new ImageView(hero_up));
+
+			}
 //			Player harry = new Player("Harry",14,15,"up");
 //			players.add(harry);
 //			fields[14][15].setGraphic(new ImageView(hero_up));
