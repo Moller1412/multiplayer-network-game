@@ -135,17 +135,50 @@ public class GUI extends Application {
 				switch (event.getCode()) {
 				case UP:    playerMoved(0,-1,"up");
                     try {
-                        outToServer.writeBytes("Up" +'\n');
+                        outToServer.writeBytes("up" +'\n');
 						String sentence = inFromServer.readLine();
 						System.out.println(sentence);
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+
                     break;
-				case DOWN:  playerMoved(0,+1,"down");  break;
-				case LEFT:  playerMoved(-1,0,"left");  break;
-				case RIGHT: playerMoved(+1,0,"right"); break;
+				case DOWN:  playerMoved(0,+1,"down");
+					try {
+						outToServer.writeBytes("down" +'\n');
+						String sentence = inFromServer.readLine();
+						System.out.println(sentence);
+
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+
+				break;
+				case LEFT:  playerMoved(-1,0,"left");
+
+					try {
+						outToServer.writeBytes("left" +'\n');
+						String sentence = inFromServer.readLine();
+						System.out.println(sentence);
+
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+
+				break;
+				case RIGHT: playerMoved(+1,0,"right");
+
+					try {
+						outToServer.writeBytes("right" +'\n');
+						String sentence = inFromServer.readLine();
+						System.out.println(sentence);
+
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+
+				break;
 				default: break;
 				}
 			});
