@@ -79,7 +79,7 @@ public class GUI extends Application {
 			ReadThread rt = new ReadThread(clientSocket);
 			//new WriteThread(clientSocket).start();
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-			//BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
@@ -130,7 +130,7 @@ public class GUI extends Application {
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			String firstmessage="";
+
 			rt.start();
 
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -150,7 +150,7 @@ public class GUI extends Application {
 			
             // Setting up standard players
 
-
+			String firstmessage = inFromServer.readLine();
 			int playerId=-1;
 			if(firstmessage.startsWith("Player:")){
 				playerId= Integer.parseInt(firstmessage.substring(7));
