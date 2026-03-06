@@ -75,7 +75,7 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) {
 
         try {
-			Socket clientSocket = new Socket("Localhost", 6789);
+			Socket clientSocket = new Socket("localhost", 6789);
 			ReadThread rt = new ReadThread(clientSocket);
 			//new WriteThread(clientSocket).start();
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
@@ -149,16 +149,18 @@ public class GUI extends Application {
             // Setting up standard players
 			
 
-
-			if(clientSocket.isConnected()){
-				me = new Player("Orville",9,4,"up");
+				me = new Player("Me",9,4,"up");
 				players.add(me);
 				fields[9][4].setGraphic(new ImageView(hero_up));
 
-			}
-//			Player harry = new Player("Harry",14,15,"up");
-//			players.add(harry);
-//			fields[14][15].setGraphic(new ImageView(hero_up));
+
+			Player Lukas = new Player("Not me",14,15,"up");
+			players.add(Lukas);
+		    fields[14][15].setGraphic(new ImageView(hero_up));
+
+			Player Christian = new Player("Maybe me",9,10,"up");
+			players.add(Christian);
+			fields[9][10].setGraphic(new ImageView(hero_up));
 
 			scoreList.setText(getScoreList());
 		} catch(Exception e) {
