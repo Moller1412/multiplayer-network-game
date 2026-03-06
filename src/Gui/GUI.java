@@ -130,7 +130,7 @@ public class GUI extends Application {
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-
+			String firstmessage = inFromServer.readLine();
 			rt.start();
 
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -150,7 +150,7 @@ public class GUI extends Application {
 			
             // Setting up standard players
 
-			String firstmessage = inFromServer.readLine();
+
 			int playerId=-1;
 			if(firstmessage.startsWith("Player:")){
 				playerId= Integer.parseInt(firstmessage.substring(7));
