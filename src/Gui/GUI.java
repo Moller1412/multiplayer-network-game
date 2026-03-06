@@ -130,7 +130,9 @@ public class GUI extends Application {
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			String firstmessage="";
 			rt.start();
+
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 				try {
 					outToServer.writeBytes("Moved" +'\n');
@@ -147,12 +149,16 @@ public class GUI extends Application {
 			});
 			
             // Setting up standard players
-			
 
-				me = new Player("Me",9,4,"up");
-				players.add(me);
-				fields[9][4].setGraphic(new ImageView(hero_up));
 
+			int playerId=-1;
+			if(firstmessage.startsWith("Player:")){
+				playerId= Integer.parseInt(firstmessage.substring(7));
+			}
+
+			Player Kjartan = new Player("Me",9,4,"up");
+			players.add(Kjartan);
+			fields[9][4].setGraphic(new ImageView(hero_up));
 
 			Player Lukas = new Player("Not me",14,15,"up");
 			players.add(Lukas);
@@ -161,6 +167,14 @@ public class GUI extends Application {
 			Player Christian = new Player("Maybe me",9,10,"up");
 			players.add(Christian);
 			fields[9][10].setGraphic(new ImageView(hero_up));
+
+			if(playerId==0){
+				me = Kjartan;
+			}else if(playerId==1){
+				me=Lukas;
+			}else if(playerId==2){
+				me=Christian;
+			}
 
 			scoreList.setText(getScoreList());
 		} catch(Exception e) {

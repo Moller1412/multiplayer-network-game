@@ -13,17 +13,24 @@ import java.util.List;
 public class ServerTraad extends Thread{
     public List <Player> players = new ArrayList<>();
     Socket connSocket;
+    int playerID;
 
-    public ServerTraad(Socket connSocket) {
-        this.connSocket = connSocket;
-    }
     DataOutputStream outToClient;
     BufferedReader inFromClient;
+
+    public ServerTraad(Socket connSocket, int playerID) {
+        this.connSocket = connSocket;
+        this.playerID = playerID;
+    }
+
+
     public void run(){
+
         try {
             inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 
             outToClient = new DataOutputStream(connSocket.getOutputStream());
+            outToClient.writeBytes("Player:" + playerID + '\n');
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
