@@ -12,7 +12,7 @@ import java.net.Socket;
 public class ServerTraad extends Thread {
     private final Socket connSocket;
     private final int playerID;
-    private Player player;
+
 
     private DataOutputStream outToClient;
     private BufferedReader inFromClient;
@@ -39,14 +39,13 @@ public class ServerTraad extends Thread {
             outToClient = new DataOutputStream(connSocket.getOutputStream());
 
             send("PLAYER:" + playerID);
-            player= GUI.me;
+
 
             String message;
             while ((message = inFromClient.readLine()) != null) {
                 if (message.startsWith("MOVE:")) {
                     String direction = message.substring(5);
                     TCPServer.broadcast("MOVE:" + playerID + ":" + direction);
-                    TCPServer.broadcast(player.getXpos() + "" + player.getYpos());
                 }
             }
         } catch (IOException e) {
