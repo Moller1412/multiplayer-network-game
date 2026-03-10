@@ -175,12 +175,19 @@ public class GUI extends Application {
 		players.add(p1);
 		players.add(p2);
 
-		fields[9][4].setGraphic(new ImageView(hero_up));
-		fields[14][15].setGraphic(new ImageView(hero_up));
-		fields[9][10].setGraphic(new ImageView(hero_up));
+		//fields[9][4].setGraphic(new ImageView(hero_up));
+		//fields[14][15].setGraphic(new ImageView(hero_up));
+		//fields[9][10].setGraphic(new ImageView(hero_up));
 
 		if (playerId >= 0 && playerId < players.size()) {
 			me = players.get(playerId);
+			if(playerId==0) {
+				fields[9][4].setGraphic(new ImageView(hero_up));
+			}else if(playerId==1){
+				fields[9][4].setGraphic(new ImageView(hero_up));
+			} else {
+				fields[9][4].setGraphic(new ImageView(hero_up));
+			}
 		} else {
 			System.out.println("For mange clients connected");
 		}
