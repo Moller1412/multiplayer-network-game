@@ -1,48 +1,56 @@
 package Server;
 
-import Player.Player;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ServerTraad extends Thread{
-    public List <Player> players = new ArrayList<>();
-    Socket connSocket;
-    int playerID;
+public class ServerTraad extends Thread {
+    private final Socket connSocket;
+    private final int playerID;
 
-    DataOutputStream outToClient;
-    BufferedReader inFromClient;
+    private DataOutputStream outToClient;
+    private BufferedReader inFromClient;
 
     public ServerTraad(Socket connSocket, int playerID) {
         this.connSocket = connSocket;
         this.playerID = playerID;
     }
 
-
-    public void run(){
-
+    public synchronized void send(String message) {
         try {
-            inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
-
-            outToClient = new DataOutputStream(connSocket.getOutputStream());
-            outToClient.writeBytes("Player:" + playerID + '\n');
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            outToClient.writeBytes("Spillet er startet " + "\n");
-            while (true) {
-                String up = inFromClient.readLine();
-                System.out.println(up);
-                outToClient.writeBytes(up + '\n');
+            if (outToClient != null) {
+                outToClient.writeBytes(message + "\n");
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Kunne ikke sende til client " + playerID);
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
+            outToClient = new DataOutputStream(connSocket.getOutputStream());
+
+            send("PLAYER:" + playerID);
+
+            String message;
+            while ((message = inFromClient.readLine()) != null) {
+                if (message.startsWith("MOVE:")) {
+                    String direction = message.substring(5);
+                    TCPServer.broadcast("MOVE:" + playerID + ":" + direction);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Client disconnected: " + playerID);
+        } finally {
+            TCPServer.removeClient(this);
+            try {
+                connSocket.close();
+            } catch (IOException ignored) {
+            }
         }
     }
 }
