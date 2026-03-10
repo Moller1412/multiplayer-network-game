@@ -69,7 +69,7 @@ public class GUI extends Application {
 		try {
 			instance = this;
 
-			Socket clientSocket = new Socket("localhost", 6789);
+			Socket clientSocket = new Socket("10.10.138.165", 6789);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
