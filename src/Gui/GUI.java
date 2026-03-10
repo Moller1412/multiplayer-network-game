@@ -170,21 +170,20 @@ public class GUI extends Application {
 		if (playerId == 0){
 			Player p0 = new Player("Spiller1", 9, 4, "up");
 			players.add(p0);
+			fields[9][4].setGraphic(new ImageView(hero_up));
 		} else if (playerId == 1) {
 			Player p1 = new Player("Spiller2", 14, 15, "up");
 			players.add(p1);
-
+			fields[14][15].setGraphic(new ImageView(hero_up));
 		} else if (playerId == 2){
 			Player p2 = new Player("Spiller3", 9, 10, "up");
 			players.add(p2);
+			fields[9][10].setGraphic(new ImageView(hero_up));
 		} else{
 			System.out.println("Too many players!");
 		}
 
 
-		fields[9][4].setGraphic(new ImageView(hero_up));
-		fields[14][15].setGraphic(new ImageView(hero_up));
-		fields[9][10].setGraphic(new ImageView(hero_up));
 
 		if (playerId >= 0 && playerId < players.size()) {
 			me = players.get(playerId);
