@@ -69,7 +69,7 @@ public class GUI extends Application {
 		try {
 			instance = this;
 
-			Socket clientSocket = new Socket("localhost", 6789);
+			Socket clientSocket = new Socket("10.10.138.165", 6789);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -167,13 +167,20 @@ public class GUI extends Application {
 	private void setupPlayers(int playerId) {
 		players.clear();
 
-		Player p0 = new Player("Spiller1", 9, 4, "up");
-		Player p1 = new Player("Spiller2", 14, 15, "up");
-		Player p2 = new Player("Spiller3", 9, 10, "up");
+		if (playerId == 0){
+			Player p0 = new Player("Spiller1", 9, 4, "up");
+			players.add(p0);
+		} else if (playerId == 1) {
+			Player p1 = new Player("Spiller2", 14, 15, "up");
+			players.add(p1);
 
-		players.add(p0);
-		players.add(p1);
-		players.add(p2);
+		} else if (playerId == 2){
+			Player p2 = new Player("Spiller3", 9, 10, "up");
+			players.add(p2);
+		} else{
+			System.out.println("Too many players!");
+		}
+
 
 		fields[9][4].setGraphic(new ImageView(hero_up));
 		fields[14][15].setGraphic(new ImageView(hero_up));
