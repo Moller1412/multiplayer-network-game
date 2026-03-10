@@ -29,7 +29,7 @@ public class TCPServer {
     }
 
     public static void main(String[] args) throws Exception {
-        ServerSocket welcomeSocket = new ServerSocket(6789);
+        ServerSocket welcomeSocket = new ServerSocket(6790);
 
         while (true) {
             Socket connectionSocket = welcomeSocket.accept();

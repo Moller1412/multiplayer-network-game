@@ -69,7 +69,7 @@ public class GUI extends Application {
 		try {
 			instance = this;
 
-			Socket clientSocket = new Socket("10.10.138.165", 6789);
+			Socket clientSocket = new Socket("localhost", 6790);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -96,7 +96,7 @@ public class GUI extends Application {
 
 			GridPane boardGrid = new GridPane();
 
-			image_wall = new Image(getClass().getResourceAsStream("/Image/wall4.png"), size, size, false, false);
+			image_wall = new Image(getClass().getResourceAsStream("/Image/wall1.png"), size, size, false, false);
 			image_floor = new Image(getClass().getResourceAsStream("/Image/floor1.png"), size, size, false, false);
 
 			hero_right = new Image(getClass().getResourceAsStream("/Image/heroRight.png"), size, size, false, false);
