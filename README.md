@@ -1,127 +1,159 @@
-# SynSpil – Multiplayer Network Game
+# Multiplayer Network Game
 
-A multiplayer game developed as part of the 3rd semester Distribution, Integration and Security course on the Computer Science programme at Erhvervsakademi Aarhus.
+A multiplayer network game built with Java and JavaFX using TCP client-server communication.
 
-The project focuses on network programming and client-server communication using Java and TCP sockets.
+## Project Description
 
-## About the Project
+This project is a multiplayer network game where multiple clients can connect to a central server and play simultaneously.
 
-SynSpil is a multiplayer game where multiple clients connect to a central server.
+The application uses TCP sockets for communication between the clients and server. The server manages connected players and handles communication between the different clients.
 
-The server is responsible for handling connected players and communicating game state between the clients.
+Each client has a JavaFX graphical user interface and communicates with the server in real time.
 
-The project was developed as a group project with a focus on distributed systems, network communication and concurrent programming.
+The project was developed as part of my studies at Erhvervsakademi Aarhus.
+
+## Features
+
+- Multiplayer gameplay
+- Client-server architecture
+- TCP socket communication
+- Multiple simultaneous clients
+- Server-side player management
+- Communication between clients through the server
+- JavaFX graphical user interface
+- Real-time game state updates
+- Multithreaded server communication
+
+## Technologies
+
+- Java
+- JavaFX
+- TCP/IP
+- Java Sockets
+- Multithreading
+- Git
 
 ## Architecture
 
-The application follows a client-server architecture:
+The game uses a central client-server architecture.
 
 ```text
-             ┌──────────────┐
-             │    Server    │
-             │              │
-             │ TCP Server   │
-             └──────┬───────┘
-                    │
-             ┌──────┴───────┐
-             │              │
-          TCP│              │TCP
-             │              │
-     ┌───────▼─────┐  ┌─────▼───────┐
-     │   Client 1  │  │   Client 2  │
-     │             │  │             │
-     │   JavaFX    │  │   JavaFX    │
-     └─────────────┘  └─────────────┘
-Features
-Multiplayer gameplay
-Client-server architecture
-TCP socket communication
-Multiple simultaneous clients
-Server-side player management
-Communication between clients through the server
-JavaFX graphical user interface
-Real-time game state updates
-Multithreaded server communication
-Technologies
-Java
-JavaFX
-TCP/IP
-Java Sockets
-Multithreading
-Maven
-Git
-Project Structure
+             ┌─────────────────┐
+             │      Server     │
+             │                 │
+             │  Player Manager │
+             │  TCP Sockets    │
+             └────────┬────────┘
+                      │
+             ┌────────┴────────┐
+             │                 │
+       ┌─────▼─────┐     ┌─────▼─────┐
+       │  Client 1 │     │  Client 2 │
+       │            │     │            │
+       │  JavaFX    │     │  JavaFX    │
+       └────────────┘     └────────────┘
+```
+
+The server acts as the central communication point between connected clients.
+
+Each client connects to the server using a TCP socket. The server handles communication and keeps track of the connected players.
+
+## Communication
+
+The application uses TCP sockets to provide reliable communication between the clients and server.
+
+The server is designed to handle multiple clients simultaneously using separate threads for communication.
+
+```text
+Client 1 ──────┐
+               │
+               ▼
+           ┌─────────┐
+           │ Server  │
+           └─────────┘
+               ▲
+               │
+Client 2 ──────┘
+```
+
+This allows multiple players to participate in the same game while the server manages the shared game state.
+
+## Project Structure
+
+```text
 src/
 ├── App/
 │   └── App.java
-│
 ├── Gui/
 │   └── GUI.java
-│
 ├── Image/
-│   ├── fire...
-│   ├── hero...
-│   ├── wall...
-│   └── floor...
-│
+│   └── *.png
 ├── Player/
 │   └── Player.java
-│
-└── Server/
-    ├── TCPServer.java
-    ├── ServerTraad.java
-    ├── ReadThread.java
-    └── WriteThread.java
-Client
+├── Server/
+│   ├── ReadThread.java
+│   ├── ServerTraad.java
+│   ├── TCPServer.java
+│   └── WriteThread.java
+└── module-info.java
+```
 
-The client contains the JavaFX graphical interface and handles the interaction between the player and the game.
+### Main Components
 
-Server
+- **App** – Contains the application entry point
+- **Gui** – Handles the JavaFX graphical user interface
+- **Player** – Represents players in the game
+- **Server** – Contains the TCP server and communication threads
+- **Image** – Contains images used by the game
 
-The server manages incoming client connections and handles communication between connected players.
+## Server Communication
 
-Each client connection is handled using separate threads for reading and writing data.
+The server is responsible for:
 
-Networking
+- Accepting incoming client connections
+- Managing connected players
+- Receiving data from clients
+- Sending data to clients
+- Coordinating communication between players
+- Handling multiple clients using threads
 
-The project uses TCP sockets for communication between clients and the central server.
+The client communicates with the server through TCP sockets.
 
-The server listens for incoming connections and maintains communication with multiple clients simultaneously.
+## Local Setup
 
-The client connects to the server using:
+The game is configured to use `localhost` for local development and testing.
 
-localhost:6790
+To run the project, start the server first and then launch the client application.
 
-when running the server and client on the same machine.
+Multiple client instances can then connect to the same server to test multiplayer functionality.
 
-Running the Project
-Requirements
-Java
-Maven
-IntelliJ IDEA or another Java IDE
-Run the server
+## Screenshots
 
-Start the server application first.
+A screenshot of the game is included below.
 
-Run the client
+### Game
 
-After the server has started, launch the JavaFX client.
+![Game](maze.png)
 
-Multiple clients can be started to test the multiplayer functionality.
+## Project Context
 
-Project Context
+This project was developed as a school project at Erhvervsakademi Aarhus.
 
-This project was developed as part of the Distribution, Integration and Security course on the 3rd semester of the Computer Science programme at Erhvervsakademi Aarhus.
+The purpose of the project was to gain practical experience with network programming, client-server architecture, TCP communication, multithreading and graphical user interfaces.
 
-The project focused on:
+The project was developed as part of a course focusing on distributed systems, integration and security.
 
-Network programming
-TCP/IP communication
-Client-server architecture
-Multithreading
-Distributed systems
-JavaFX
-Concurrent client handling
-Disclaimer
+## What I Learned
 
-This repository contains a student project developed for educational purposes.
+Through this project I gained experience with:
+
+- Network programming in Java
+- TCP socket communication
+- Client-server architecture
+- Managing multiple simultaneous clients
+- Multithreaded server programming
+- Sending and receiving data over sockets
+- Managing shared game state
+- Building graphical interfaces with JavaFX
+- Structuring a larger Java application
+- Using Git and GitHub for version control
